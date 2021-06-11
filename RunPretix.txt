@@ -1,0 +1,20 @@
+Database: It works!
+
+docker run --rm --name database \
+-p 5432:5432 \
+-e POSTGRES_USER=pretix \
+-e POSTGRES_PASSWORD=pretix \
+-v postgres:/var/lib/postgresql/data \
+postgres:latest
+
+docker run -d --name redis -p 6379:6379 redis:latest
+docker run --name redis -p 6379:6379 redis:latest
+
+
+docker run --rm --name pretix -p 8000:80 \
+-v /Users/augustocollerone/Projects/Backstage/pretix/etc/pretix/pretix.cfg:/etc/pretix/pretix.cfg \
+-v data:/data \
+-v src:/pretix/src \
+coller1/pretix:latest
+
+docker network connect ticketsBackend pretix database cache
